@@ -15,25 +15,20 @@ class DataLoader:
             df['Base_Score'] = df['Level'].apply(lambda x: level_map.get(x, 2))
 
             complexity_keywords = {
-                'one arm': 1.0,      
-                'one leg': 1.0,
-                'weighted': 0.5,     # Доп вес усложняет
-                'decline': 1,        # Наклон вниз сложнее
-                'incline': 0.3,      # Наклон вверх чуть сложнее базы (иногда)
-                'side to side': 0.6, # Сложная координация
-                'alternating': 0.4,  # Переменные движения
-                'plyo': 1.0,         # Плиометрика всегда сложная
-                'explosive': 1.0,
-                'clapping': 1.5,     # Отжимания с хлопком - точно не для новичков
-                'behind the neck': 0.8, # Травмоопасно и сложно
-                'wide grip': 0.2,    # Чуть сложнее балансировать
+                'one arm': 1.0, 'one leg': 1.0,
+                'weighted': 0.5, 'decline': 1, 
+                'incline': 0.3, 'side to side': 0.6, 
+                'alternating': 0.4, 'plyo': 1.0,
+                'explosive': 1.0, 'clapping': 1.5,
+                'behind the neck': 0.8, 'wide grip': 0.2,
             }
 
             def adjust_score(row):
-                score = row['Base_Score']
+                score = row['Base_Score'] # Исходный уровень
                 title_lower = str(row['Title']).lower()
                 
-                for word, penalty in complexity_keywords.items():
+                # Добавление штравных баллов
+                for word, penalty in complexity_keywords.items(): 
                     if word in title_lower:
                         score += penalty
                 
